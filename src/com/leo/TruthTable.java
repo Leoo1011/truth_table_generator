@@ -23,7 +23,7 @@ public class TruthTable {
     }
 
     /**
-     * Generate every permutation of values for the propositions in a truth table
+     * Generates every permutation of values for the propositions in a truth table
      * with nProps propositions.
      * @param nProps the amount of propositions.
      * @return String array containing each permutation in the form of 1's (true) and 0's (false).
