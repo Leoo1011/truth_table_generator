@@ -27,7 +27,8 @@ public class TruthTable {
      * with nProps propositions.
      * @param nProps the amount of propositions.
      * @return String array containing each permutation in the form of 1's (true) and 0's (false).
-     * An example is <code>generatePropositionPermutations(2) == {"00", "01", "10", "11"}</code>.
+     * An example is:
+     * <code>generatePropositionPermutations(2) == {"00", "01", "10", "11"}</code>
      */
     public static String[] generatePropositionPermutations(int nProps) {
         int numPerms = ((int) Math.pow(2, nProps));
