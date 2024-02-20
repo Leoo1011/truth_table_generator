@@ -9,6 +9,15 @@ public class BooleanLogicLexer {
     private BooleanLogicLexer() {
     }
 
+    /**
+     * Performs lexical analysis ("tokenization") on a boolean logic expression
+     * (not assumed to be well-formed). Prefaces "variable" (proposition) names
+     * with "v" and unknown symbols with "u". Recognized symbols are & (and), | (or), ^ (xor),
+     * ! (not), -> (implication), <-> (double implication),and parentheses. Spaces are ignored.
+     *
+     * @param formula the formula to analyze
+     * @return array of String's, each a token in the formula (connectors, propositions, parens, etc.).
+     */
     public static String[] analyze(String formula) {
         String f = Objects.requireNonNull(formula).replaceAll(" ", "");
         String regex = "(?<name>\\w+)|[&|^!()]|->|<->|(?<unknown>.)";
@@ -22,10 +31,10 @@ public class BooleanLogicLexer {
 
             String tokenQualifier = "";
             if (matcher.group("unknown") != null) {
-                tokenQualifier = "u"; // 'u' for 'unknown'
+                tokenQualifier = "u";
             }
-            if (matcher.group("name") != null) {
-                tokenQualifier = "v"; // 'v' for 'var'/'varname'
+            else if (matcher.group("name") != null) {
+                tokenQualifier = "v";
             }
             tokens.add(tokenQualifier + f.substring(start, end));
         }
