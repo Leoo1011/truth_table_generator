@@ -11,12 +11,16 @@ public class BooleanLogicLexer {
 
     /**
      * Performs lexical analysis ("tokenization") on a boolean logic expression
-     * (not assumed to be well-formed). Prefaces "variable" (proposition) names
-     * with "v" and unknown symbols with "u". Recognized symbols are & (and), | (or), ^ (xor),
+     * (not assumed to be well-formed). Recognized symbols are & (and), | (or), ^ (xor),
      * ! (not), -> (implication), <-> (double implication),and parentheses. Spaces are ignored.
      *
      * @param formula the formula to analyze
-     * @return array of String's, each a token in the formula (connectors, propositions, parens, etc.).
+     * @return array of arrays of length 2, each sub-array of the form {tokenQualifier, token},
+     * where tokenQualifier is either "v" (variable name), "u" (unknown symbol) or "s" (known symbol),
+     * and provides some lexical information (to be used by {@link BooleanLogicParser}) alongside the token.
+     *
+     * An example output would be:
+     * <code>analyze("P -> Q"); // outputs {{"v", "P"}, {"s", "->"}, {"v", "Q"}}</code>
      */
     public static String[][] analyze(String formula) {
         String f = Objects.requireNonNull(formula).replaceAll(" ", "");
