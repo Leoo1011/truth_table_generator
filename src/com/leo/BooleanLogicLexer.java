@@ -18,26 +18,29 @@ public class BooleanLogicLexer {
      * @param formula the formula to analyze
      * @return array of String's, each a token in the formula (connectors, propositions, parens, etc.).
      */
-    public static String[] analyze(String formula) {
+    public static String[][] analyze(String formula) {
         String f = Objects.requireNonNull(formula).replaceAll(" ", "");
         String regex = "(?<name>\\w+)|[&|^!()]|->|<->|(?<unknown>.)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(f);
 
-        ArrayList<String> tokens = new ArrayList<>();
+        ArrayList<String[]> tokens = new ArrayList<>();
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();
 
-            String tokenQualifier = "";
+            String tokenQualifier = "s";
             if (matcher.group("unknown") != null) {
                 tokenQualifier = "u";
             }
             else if (matcher.group("name") != null) {
                 tokenQualifier = "v";
             }
-            tokens.add(tokenQualifier + f.substring(start, end));
+
+            String[] result = {tokenQualifier, f.substring(start, end)};
+            tokens.add(result);
         }
-        return tokens.toArray(new String[0]);
+
+        return tokens.toArray(new String[0][0]);
     }
 }
