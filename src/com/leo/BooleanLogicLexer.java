@@ -1,12 +1,19 @@
 package com.leo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BooleanLogicLexer {
     private BooleanLogicLexer() {
+    }
+
+    public static class LexError extends Exception {
+        public LexError(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -22,29 +29,32 @@ public class BooleanLogicLexer {
      * An example output would be:
      * <code>analyze("P -> Q"); // outputs {{"v", "P"}, {"s", "->"}, {"v", "Q"}}</code>
      */
-    public static String[][] analyze(String formula) {
+    public static Token[] analyze(String formula) throws LexError {
         String f = Objects.requireNonNull(formula).replaceAll(" ", "");
         String regex = "(?<name>\\w+)|[&|^!()]|->|<->|(?<unknown>.)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(f);
 
-        ArrayList<String[]> tokens = new ArrayList<>();
+        ArrayList<Token> tokens = new ArrayList<>();
+        HashMap<String, TokenType> tokenTypeHashMap = TokenTypeHashMap.getHashMap();
         while (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
+            String tokenString = f.substring(matcher.start(), matcher.end());
 
-            String tokenQualifier = "s";
+            Token result;
             if (matcher.group("unknown") != null) {
-                tokenQualifier = "u";
+                throw new LexError("Unknown symbol: " + tokenString);
             }
             else if (matcher.group("name") != null) {
-                tokenQualifier = "v";
+                result = new Proposition(tokenString);
             }
-
-            String[] result = {tokenQualifier, f.substring(start, end)};
+            else {
+                TokenType tokenType = tokenTypeHashMap.get(tokenString);
+                result = new Connective(tokenType);
+            }
             tokens.add(result);
         }
 
-        return tokens.toArray(new String[0][0]);
+        tokens.add(new EndOfLine());
+        return tokens.toArray(new Token[0]);
     }
 }
