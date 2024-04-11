@@ -83,7 +83,8 @@ public class BooleanLogicParser {
 
     private Expr unaryOperation() throws ParseError {
         if (match(NOT)) {
-            return unaryOperation();
+            Expr unaryOp = unaryOperation();
+            return new Expr.UnaryOperation(unaryOp);
         }
         return proposition();
     }
