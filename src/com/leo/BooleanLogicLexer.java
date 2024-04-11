@@ -45,7 +45,7 @@ public class BooleanLogicLexer {
                 throw new LexError("Unknown symbol: " + tokenString);
             }
             else if (matcher.group("name") != null) {
-                result = new Proposition(tokenString);
+                result = new PropositionName(tokenString);
             }
             else {
                 TokenType tokenType = tokenTypeHashMap.get(tokenString);
