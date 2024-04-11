@@ -61,5 +61,22 @@ public class BooleanLogicParser {
     }
 
     private Expr binaryOperation() {
+        Expr expr = unaryOperation();
+        while (match(OR, AND, XOR, THEN, IFF)) {
+            Token operator = previous();
+            Expr rightOperator = unaryOperation();
+            expr = new Expr.BinaryOperation(expr, operator, rightOperator);
+        }
+        return expr;
+    }
+
+    private Expr unaryOperation() {
+        if (match(NOT)) {
+            return unaryOperation();
+        }
+        return proposition();
+    }
+
+    private Expr proposition() {
     }
 }
