@@ -9,9 +9,15 @@ public class BooleanLogicParser {
         this.tokens = tokens;
     }
 
+    public static class ParseError extends Exception {
+        ParseError(String message) {
+            super(message);
+        }
+    }
+
     // TODO: Use the right return type
-    public static String[] parse() {
-        return new String[0];
+    public Expr parse() throws ParseError {
+        return formula();
     }
 
     private Token peek() {
@@ -46,11 +52,16 @@ public class BooleanLogicParser {
         return false;
     }
 
-    private Expr formula() {
+    private Token consume(TokenType type, String message) throws ParseError {
+        if (check(type)) return advance();
+        throw new ParseError(message);
+    }
+
+    private Expr formula() throws ParseError {
         return term();
     }
 
-    private Expr term() {
+    private Expr term() throws ParseError {
         Expr binaryOp = binaryOperation();
         while (match(OR, AND, XOR, THEN, IFF)) {
             Token operator = previous();
@@ -60,7 +71,7 @@ public class BooleanLogicParser {
         return binaryOp;
     }
 
-    private Expr binaryOperation() {
+    private Expr binaryOperation() throws ParseError {
         Expr expr = unaryOperation();
         while (match(OR, AND, XOR, THEN, IFF)) {
             Token operator = previous();
@@ -70,13 +81,22 @@ public class BooleanLogicParser {
         return expr;
     }
 
-    private Expr unaryOperation() {
+    private Expr unaryOperation() throws ParseError {
         if (match(NOT)) {
             return unaryOperation();
         }
         return proposition();
     }
 
-    private Expr proposition() {
+    private Expr proposition() throws ParseError {
+        if (match(PROP_NAME) && previous() instanceof PropositionName propName) {
+            return new Expr.Proposition(propName);
+        }
+        if (match(LEFT_PAREN)) {
+            Expr expr = term();
+            consume(RIGHT_PAREN, "Expected ')' after expression.");
+            return new Expr.Grouping(expr);
+        }
+        throw new ParseError("Invalid syntax");
     }
 }
