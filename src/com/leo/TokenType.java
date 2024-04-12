@@ -10,5 +10,9 @@ public enum TokenType {
     NOT,
     LEFT_PAREN,
     RIGHT_PAREN,
-    EOL   // "end of line"
+    EOL;   // "end of line"
+
+    public String toString() {
+        return this.name().toLowerCase();
+    }
 }
