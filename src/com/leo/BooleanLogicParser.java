@@ -15,7 +15,6 @@ public class BooleanLogicParser {
         }
     }
 
-    // TODO: Use the right return type
     public Expr parse() throws ParseError {
         return formula();
     }
@@ -58,6 +57,7 @@ public class BooleanLogicParser {
     }
 
     private Expr formula() throws ParseError {
+        if (isAtEnd()) return null;
         return term();
     }
 
@@ -75,6 +75,10 @@ public class BooleanLogicParser {
         Expr expr = unaryOperation();
         while (match(OR, AND, XOR, THEN, IFF)) {
             Token operator = previous();
+            if (match(RIGHT_PAREN) || isAtEnd()) {
+                throw new ParseError(
+                        "Expected expression or proposition name after operator '" + operator.type.prettyName + "'");
+            }
             Expr rightOperator = unaryOperation();
             expr = new Expr.BinaryOperation(expr, operator, rightOperator);
         }
@@ -83,10 +87,17 @@ public class BooleanLogicParser {
 
     private Expr unaryOperation() throws ParseError {
         if (match(NOT)) {
+            if (match(RIGHT_PAREN, AND, OR, XOR, THEN, IFF)) {
+                throw new ParseError("Expected expression or proposition after '!'.");
+            }
             Expr unaryOp = unaryOperation();
             return new Expr.UnaryOperation(unaryOp);
         }
-        return proposition();
+        Expr prop = proposition();
+        if (match(LEFT_PAREN, NOT)) {
+            throw new ParseError("'" + previous().type.prettyName + "' not allowed after proposition/expression.");
+        }
+        return prop;
     }
 
     private Expr proposition() throws ParseError {
@@ -96,6 +107,9 @@ public class BooleanLogicParser {
         if (match(LEFT_PAREN)) {
             Expr expr = term();
             consume(RIGHT_PAREN, "Expected ')' after expression.");
+            if (match(LEFT_PAREN, NOT)) {
+                throw new ParseError("'" + previous().type.prettyName + "' not allowed after ')'.");
+            }
             return new Expr.Grouping(expr);
         }
         throw new ParseError("Invalid syntax");
