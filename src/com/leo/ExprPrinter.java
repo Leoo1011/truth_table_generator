@@ -13,12 +13,13 @@ public class ExprPrinter {
     }
 
     static void printExpr(Expr.UnaryOperation unaryOperation) {
-        System.out.print("!");
+        System.out.print("(not ");
         printExpr(unaryOperation.expression);
+        System.out.print(")");
     }
 
     static void printExpr(Expr.Grouping grouping) {
-        System.out.print("(");
+        System.out.print("(grouping ");
         printExpr(grouping.expression);
         System.out.print(")");
     }
@@ -28,8 +29,12 @@ public class ExprPrinter {
     }
 
     static void printExpr(Expr.BinaryOperation binaryOperation) {
-        printExpr(binaryOperation.left);
+        System.out.print("(");
         printExpr(binaryOperation.operator);
+        System.out.print(" ");
+        printExpr(binaryOperation.left);
+        System.out.print(" ");
         printExpr(binaryOperation.right);
+        System.out.print(")");
     }
 }
