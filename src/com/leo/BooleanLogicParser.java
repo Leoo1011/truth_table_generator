@@ -16,7 +16,14 @@ public class BooleanLogicParser {
     }
 
     public Expr parse() throws ParseError {
-        return formula();
+        Expr result = formula();
+        if (!isAtEnd()) {
+            if (match(RIGHT_PAREN)) {
+                throw new ParseError("Unmatched ')'.");
+            }
+            throw new ParseError("Unexpected token at end of input.");
+        }
+        return result;
     }
 
     private Token peek() {
