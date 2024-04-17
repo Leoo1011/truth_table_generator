@@ -1,11 +1,17 @@
 package com.leo;
 
+import java.util.Objects;
+
 public class ExprPrinter {
-    static void printExpr(Expr expr) {
-        if (expr instanceof Expr.Proposition prop) printExpr(prop);
-        else if (expr instanceof Expr.UnaryOperation unaryOp) printExpr(unaryOp);
-        else if (expr instanceof Expr.Grouping grouping) printExpr(grouping);
-        else if (expr instanceof Expr.BinaryOperation binaryOp) printExpr(binaryOp);
+    public static void printExpr(Expr expr) {
+        Objects.requireNonNull(expr);
+        switch (expr) {
+            case Expr.Proposition prop -> printExpr(prop);
+            case Expr.UnaryOperation unaryOp -> printExpr(unaryOp);
+            case Expr.Grouping grouping -> printExpr(grouping);
+            case Expr.BinaryOperation binaryOp -> printExpr(binaryOp);
+            default -> {}
+        }
     }
 
     static void printExpr(Expr.Proposition proposition) {
