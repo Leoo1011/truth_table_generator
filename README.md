@@ -1,7 +1,7 @@
 # truth_table_generator
 
 This is a truth table generator for logical expressions in propositional logic, built from scratch. As of now, it includes a lexer, an LL(1) parser, and a truth value permutation generator for propositions (in `TruthTable`).
-It is still a work-in-progress, as the only thing one can do with the ASTs produced by the parser is to "pretty print" it, but I'm excited to continue building it.
+It is still a work-in-progress, as the only thing one can do with the ASTs produced by the parser is to "pretty print" them, but I'm excited to continue building it.
 
 (an example of the above is:)
 ```java
