@@ -26,11 +26,11 @@ public class TruthTable {
         int nPerms = ((int) Math.pow(2, nProps));
         int[][] permutations = new int[nPerms][nProps];
         for (int num = 0; num < nPerms; num++) {
-            for (int i = 0; i < nProps; i++) {
+            for (int i = 0; i < nProps; i++) {    // binary counter
                 int mask = 1 << (nProps - i - 1); // To extract bits from right to left.
-                // the '&' extracts the bit, dividing by 'mask' trims leading 0s (shifting).
+                // '&' extracts the bit, dividing by 'mask' trims trailing 0s (shifting).
                 int extractedBit = (num & mask) / mask;
-                if (extractedBit == 0) continue;
+                if (extractedBit == 0) continue;  // no need to set the bit, since arrays are zero-initialized
                 permutations[num][i] = extractedBit;
             }
         }
