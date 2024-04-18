@@ -29,7 +29,7 @@ public class BooleanLogicLexer {
      * An example output would be:
      * <code>analyze("P -> Q"); // outputs {{"v", "P"}, {"s", "->"}, {"v", "Q"}}</code>
      */
-    public static Token[] analyze(String formula) throws LexError {
+    public static Token[] tokenize(String formula) throws LexError {
         String f = Objects.requireNonNull(formula).replaceAll(" ", "");
         String regex = "(?<name>\\w+)|[&|^!()]|->|<->|(?<unknown>.)";
         Pattern pattern = Pattern.compile(regex);
