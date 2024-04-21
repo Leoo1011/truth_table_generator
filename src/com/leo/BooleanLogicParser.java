@@ -15,6 +15,16 @@ public class BooleanLogicParser {
         }
     }
 
+
+    /**
+     * Tries to "parse" the tokens provided by matching each to a rule in the context-free grammar
+     * (see the grammar in README.md).
+     * This is an LL(1) (Left to right, Leftmost derivation), recursive descent parser,
+     * with one token of lookahead.
+     *
+     * @return a child instance of {@link Expr} representing the Abstract Syntax Tree (AST) constructed.
+     * @throws ParseError if the tokens provided in the constructor don't match the grammar.
+     */
     public Expr parse() throws ParseError {
         Expr result = formula();
         if (!isAtEnd()) {
@@ -70,7 +80,7 @@ public class BooleanLogicParser {
 
     private Expr term() throws ParseError {
         Expr binaryOp = binaryOperation();
-        while (match(OR, AND, XOR, THEN, IFF)) {
+        while (match(OR, AND, XOR, THEN, IFF)) { // to match multiple operators
             Token operator = previous();
             Expr right = term();
             return new Expr.BinaryOperation(binaryOp, operator, right);

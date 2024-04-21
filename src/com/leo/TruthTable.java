@@ -10,7 +10,7 @@ public class TruthTable {
      * @param nProps the amount of propositions.
      * @return array of arrays of ints containing each permutation in the form of 1's (true) and 0's (false).
      * An example is:
-     * <code>generatePropositionPermutations(2) == {{0, 0}, {0, 1}, {1, 0}, {1, 1}}</code>
+     * {@code generatePropositionPermutations(2) == {{0, 0}, {0, 1}, {1, 0}, {1, 1}}}
      *
      * @implNote Counting from 0 to 3 (in binary) is:
      * <ul>
@@ -25,8 +25,8 @@ public class TruthTable {
     public static int[][] generateTruthValuePermutations(int nProps) {
         int nPerms = ((int) Math.pow(2, nProps));
         int[][] permutations = new int[nPerms][nProps];
-        for (int num = 0; num < nPerms; num++) {
-            for (int i = 0; i < nProps; i++) {    // binary counter
+        for (int num = 0; num < nPerms; num++) {  // binary counter
+            for (int i = 0; i < nProps; i++) {
                 int mask = 1 << (nProps - i - 1); // To extract bits from right to left.
                 // '&' extracts the bit, dividing by 'mask' trims trailing 0s (shifting).
                 int extractedBit = (num & mask) / mask;

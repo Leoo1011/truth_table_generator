@@ -1,5 +1,8 @@
 package com.leo;
 
+/**
+ * Enum to represent token types, used by the {@link BooleanLogicLexer}.
+ */
 public enum TokenType {
     PROP_NAME,
     OR("|"),

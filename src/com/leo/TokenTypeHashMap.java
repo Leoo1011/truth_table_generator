@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import static com.leo.TokenType.*;
 
+/**
+ * Helper singleton to convert symbol literals to their enum counterpart.
+ */
 public class TokenTypeHashMap {
     private static HashMap<String, TokenType> tokenTypeHashMap;
     private TokenTypeHashMap() {
