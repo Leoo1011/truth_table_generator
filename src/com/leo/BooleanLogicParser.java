@@ -1,12 +1,15 @@
 package com.leo;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import static com.leo.TokenType.*;
 
 public class BooleanLogicParser {
-    private final Token[] tokens;
-    private int current = 0;
-    public BooleanLogicParser(Token[] tokens) {
-        this.tokens = tokens;
+    private static Token[] tokens;
+    private static int current = 0;
+    private static final Set<String> propositionNames = new LinkedHashSet<>();
+    BooleanLogicParser() {
     }
 
     public static class ParseError extends Exception {
@@ -15,17 +18,21 @@ public class BooleanLogicParser {
         }
     }
 
+    public static int countPropositions() {
+        return propositionNames.size();
+    }
 
     /**
      * Tries to "parse" the tokens provided by matching each to a rule in the context-free grammar
      * (see the grammar in README.md).
-     * This is an LL(1) (Left to right, Leftmost derivation), recursive descent parser,
-     * with one token of lookahead.
+     * This is an LL(1) (Left to right, Leftmost derivation, one token of lookahead) recursive descent parser.
      *
+     * @param tokenArray the array of tokens to parse, produced by the {@link BooleanLogicLexer}.
      * @return a child instance of {@link Expr} representing the Abstract Syntax Tree (AST) constructed.
      * @throws ParseError if the tokens provided in the constructor don't match the grammar.
      */
-    public Expr parse() throws ParseError {
+    protected static Expr parse(final Token[] tokenArray) throws ParseError {
+        tokens = tokenArray;
         Expr result = formula();
         if (!isAtEnd()) {
             if (match(RIGHT_PAREN)) {
@@ -36,29 +43,29 @@ public class BooleanLogicParser {
         return result;
     }
 
-    private Token peek() {
+    private static Token peek() {
         return tokens[current];
     }
 
-    private Token previous() {
+    private static Token previous() {
         return tokens[current - 1];
     }
 
-    private Token advance() {
+    private static Token advance() {
         if (!isAtEnd()) current++;
         return previous();
     }
 
-    private boolean isAtEnd() {
+    private static boolean isAtEnd() {
         return peek().type == EOL;
     }
 
-    private boolean check(TokenType type) {
+    private static boolean check(TokenType type) {
         if (isAtEnd()) return false;
         return peek().type == type;
     }
 
-    private boolean match(TokenType... types) {
+    private static boolean match(TokenType... types) {
         for (TokenType type : types) {
             if (check(type)) {
                 advance();
@@ -68,17 +75,17 @@ public class BooleanLogicParser {
         return false;
     }
 
-    private Token consume(TokenType type, String message) throws ParseError {
+    private static Token consume(TokenType type, String message) throws ParseError {
         if (check(type)) return advance();
         throw new ParseError(message);
     }
 
-    private Expr formula() throws ParseError {
+    private static Expr formula() throws ParseError {
         if (isAtEnd()) return null;
         return term();
     }
 
-    private Expr term() throws ParseError {
+    private static Expr term() throws ParseError {
         Expr binaryOp = binaryOperation();
         while (match(OR, AND, XOR, THEN, IFF)) { // to match multiple operators
             Token operator = previous();
@@ -88,7 +95,7 @@ public class BooleanLogicParser {
         return binaryOp;
     }
 
-    private Expr binaryOperation() throws ParseError {
+    private static Expr binaryOperation() throws ParseError {
         Expr expr = unaryOperation();
         while (match(OR, AND, XOR, THEN, IFF)) {
             Token operator = previous();
@@ -102,7 +109,7 @@ public class BooleanLogicParser {
         return expr;
     }
 
-    private Expr unaryOperation() throws ParseError {
+    private static Expr unaryOperation() throws ParseError {
         if (match(NOT)) {
             if (match(RIGHT_PAREN, AND, OR, XOR, THEN, IFF)) {
                 throw new ParseError("Expected expression or proposition after '!'.");
@@ -117,8 +124,9 @@ public class BooleanLogicParser {
         return prop;
     }
 
-    private Expr proposition() throws ParseError {
+    private static Expr proposition() throws ParseError {
         if (match(PROP_NAME) && previous() instanceof PropositionName propName) {
+            propositionNames.add(propName.name);
             return new Expr.Proposition(propName);
         }
         if (match(LEFT_PAREN)) {
