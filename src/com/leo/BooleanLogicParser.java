@@ -8,7 +8,7 @@ import static com.leo.TokenType.*;
 public class BooleanLogicParser {
     private static Token[] tokens;
     private static int current = 0;
-    private static final Set<String> propositionNames = new LinkedHashSet<>();
+    private static Set<String> propositionNames;
     private BooleanLogicParser() {
     }
 
@@ -31,8 +31,10 @@ public class BooleanLogicParser {
      * @return a child instance of {@link Expr} representing the Abstract Syntax Tree (AST) constructed.
      * @throws ParseError if the tokens provided in the constructor don't match the grammar.
      */
-    protected static Expr parse(final Token[] tokenArray) throws ParseError {
+    public static Expr parse(final Token[] tokenArray) throws ParseError {
         tokens = tokenArray;
+        propositionNames = new LinkedHashSet<>();
+
         Expr result = formula();
         if (!isAtEnd()) {
             if (match(RIGHT_PAREN)) {
