@@ -9,7 +9,7 @@ public class BooleanLogicParser {
     private static Token[] tokens;
     private static int current = 0;
     private static final Set<String> propositionNames = new LinkedHashSet<>();
-    BooleanLogicParser() {
+    private BooleanLogicParser() {
     }
 
     public static class ParseError extends Exception {
