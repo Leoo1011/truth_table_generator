@@ -14,22 +14,23 @@ public class TruthTable {
      *
      * @implNote Counting from 0 to 3 (in binary) is:
      * <ul>
-     * <li>00 (F, F)</li>
+     * <li>00, which is equivalent to the tuple (F, F)</li>
      * <li>01 (F, T)</li>
      * <li>10 (T, F)</li>
      * <li>11 (T, T)</li>
      * </ul>
+     * Which, effectively, are all the possible permutations for a truth table with two propositions.
      * This algorithm uses this fact, along with bitwise operations (and masking) to extract each individual
      * bit (truth value).
      */
     public static int[][] generateTruthValuePermutations(int nProps) {
         int nPerms = ((int) Math.pow(2, nProps));
         int[][] permutations = new int[nPerms][nProps];
-        for (int num = 0; num < nPerms; num++) {  // binary counter
+        for (int num = 0; num < nPerms; num++) {   // Binary counter
             for (int i = 0; i < nProps; i++) {
-                int mask = 1 << (nProps - 1) - i; // To extract bits from right to left.
-                // '&' extracts the bit, dividing by 'mask' trims trailing 0s (shifting).
-                int extractedBit = (num & mask) / mask;
+                int index = 1 << (nProps - 1) - i; // To extract bits from right to left.
+                // '&' extracts the bit, dividing by 'index' trims trailing 0s (shifting).
+                int extractedBit = (num & index) / index;
                 permutations[num][i] = extractedBit;
             }
         }
