@@ -1,5 +1,6 @@
 package com.leo;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -18,8 +19,8 @@ public class BooleanLogicParser {
         }
     }
 
-    public static int countPropositions() {
-        return propositionNames.size();
+    public static Set getPropositionNames() {
+        return Collections.unmodifiableSet(propositionNames);
     }
 
     /**
