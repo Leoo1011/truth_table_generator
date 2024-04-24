@@ -27,10 +27,9 @@ public class TruthTable {
         int[][] permutations = new int[nPerms][nProps];
         for (int num = 0; num < nPerms; num++) {  // binary counter
             for (int i = 0; i < nProps; i++) {
-                int mask = 1 << (nProps - i - 1); // To extract bits from right to left.
+                int mask = 1 << (nProps - 1) - i; // To extract bits from right to left.
                 // '&' extracts the bit, dividing by 'mask' trims trailing 0s (shifting).
                 int extractedBit = (num & mask) / mask;
-                if (extractedBit == 0) continue;  // no need to set the bit, since arrays are zero-initialized
                 permutations[num][i] = extractedBit;
             }
         }
