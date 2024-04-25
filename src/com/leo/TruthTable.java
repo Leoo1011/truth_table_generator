@@ -1,16 +1,46 @@
 package com.leo;
 
 public class TruthTable {
-    private TruthTable() {
+    /**
+     * A truth table generator.
+     * @param expression The boolean logic formula from which to generate the truth table.
+     *
+     * @throws BooleanLogicLexer.LexError if the formula has invalid tokens.
+     * @throws BooleanLogicParser.ParseError if the formula doesn't match the grammar.
+     */
+    TruthTable(String expression) throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError {
+        this(expression, new String[]{"T", "F"});
     }
 
     /**
-     * Generates every permutation of values for the propositions in a truth table
-     * with nProps propositions.
-     * @param nProps the amount of propositions.
+     * A truth table generator.
+     * @param expression The boolean logic formula from which to generate the truth table.
+     * @param truthRepresentation An array, of length 2, whose first element will be used to represent
+     *                            true values, and the second will represent false values.
+     *
+     * @throws BooleanLogicLexer.LexError if the formula has invalid tokens.
+     * @throws BooleanLogicParser.ParseError if the formula doesn't match the grammar.
+     * @throws IllegalStateException if truthRepresentation.length != 2.
+     */
+    TruthTable(String expression, String[] truthRepresentation)
+            throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalStateException {
+        if (truthRepresentation.length != 2) {
+            throw new IllegalStateException("'truthRepresentation' should have exactly 2 values.");
+        }
+        this.truthRepresentation = truthRepresentation;
+        formula = expression;
+        tokens = BooleanLogicLexer.tokenize(formula);
+        ast = BooleanLogicParser.parse(tokens);
+    }
+
+    private final String[] truthRepresentation;
+    private final String formula;
+    private final Token[] tokens;
+    private final Expr ast;
+
+    /**
+     * Generates every permutation of values for the propositions in the truth table.
      * @return array of arrays of ints containing each permutation in the form of 1's (true) and 0's (false).
-     * An example is:
-     * {@code generatePropositionPermutations(2) == {{0, 0}, {0, 1}, {1, 0}, {1, 1}}}
      *
      * @implNote Counting from 0 to 3 (in binary) is:
      * <ul>
@@ -23,13 +53,14 @@ public class TruthTable {
      * This algorithm uses this fact, along with bitwise operations (and masking) to extract each individual
      * bit (truth value).
      */
-    public static int[][] generateTruthValuePermutations(int nProps) {
+    private static int[][] generateTruthValuePermutations() {
+        int nProps = BooleanLogicParser.getPropositionNames().size();
         int nPerms = ((int) Math.pow(2, nProps));
         int[][] permutations = new int[nPerms][nProps];
         for (int num = 0; num < nPerms; num++) {   // Binary counter
             for (int i = 0; i < nProps; i++) {
                 int index = 1 << (nProps - 1) - i; // To extract bits from right to left.
-                // '&' extracts the bit, dividing by 'index' trims trailing 0s (shifting).
+                // Dividing by 'index' trims trailing 0s (same as right-shifting by index/2).
                 int extractedBit = (num & index) / index;
                 permutations[num][i] = extractedBit;
             }
