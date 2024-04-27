@@ -27,13 +27,15 @@ public class TruthTable {
         if (truthRepresentation.length != 2) {
             throw new IllegalStateException("'truthRepresentation' should have exactly 2 values.");
         }
-        this.truthRepresentation = truthRepresentation;
+        truth = truthRepresentation[0];
+        falsity = truthRepresentation[1];
         formula = expression;
         tokens = BooleanLogicLexer.tokenize(formula);
         ast = BooleanLogicParser.parse(tokens);
     }
 
-    private final String[] truthRepresentation;
+    private final String truth;
+    private final String falsity;
     private final String formula;
     private final Token[] tokens;
     private final Expr ast;
