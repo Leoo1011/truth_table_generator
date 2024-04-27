@@ -31,16 +31,8 @@ public class BooleanLogicInterpreter {
         };
     }
 
-    private static int xor(int a, int b) {
-        return (a + b) % 2;
-    }
-
     private static int not(int a) {
-        return Math.abs(~a); // ~0 = -1
-    }
-
-    private static int iff(int a, int b) {
-        return not(xor(a, b));
+        return a ^ 1; // ~0 = -1
     }
 
     private static int interpret(final Expr.BinaryOperation binaryOp) {
@@ -50,9 +42,9 @@ public class BooleanLogicInterpreter {
         return switch (binaryOp.operator.type) {
             case OR   -> left | right;
             case AND  -> left & right;
-            case XOR  -> xor(left, right);
+            case XOR  -> left ^ right;
             case THEN -> not(left) | right;
-            case IFF  -> iff(left, right);
+            case IFF  -> not(left ^ right);
             case NOT, PROP_NAME, LEFT_PAREN, RIGHT_PAREN, EOL ->
                 throw new IllegalStateException("Unexpected operator type: '" + binaryOp.operator.type + "'");
         };
