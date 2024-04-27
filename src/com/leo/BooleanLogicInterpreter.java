@@ -36,7 +36,6 @@ public class BooleanLogicInterpreter {
     }
 
     private static int not(int a) {
-        int no = 0;
         return Math.abs(~a); // ~0 = -1
     }
 
