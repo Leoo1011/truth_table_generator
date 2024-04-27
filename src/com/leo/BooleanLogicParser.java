@@ -19,7 +19,7 @@ public class BooleanLogicParser {
         }
     }
 
-    public static Set getPropositionNames() {
+    public static Set<String> getPropositionNames() {
         return Collections.unmodifiableSet(propositionNames);
     }
 
