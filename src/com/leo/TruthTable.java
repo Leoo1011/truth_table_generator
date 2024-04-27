@@ -30,7 +30,7 @@ public class TruthTable {
         truth = truthRepresentation[0];
         falsity = truthRepresentation[1];
         formula = expression;
-        tokens = BooleanLogicLexer.tokenize(formula);
+        Token[] tokens = BooleanLogicLexer.tokenize(formula);
         ast = BooleanLogicParser.parse(tokens);
     }
 
