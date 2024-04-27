@@ -87,12 +87,31 @@ public class TruthTable {
         }
         return result;
     }
+
     private void generateInterpretedValues(int[][] truthValuePermutations) {
         int rows = table.length;
         int cols = table[0].length - 1;
         for (int i = 1; i < rows; i++) {
             int evaluated = BooleanLogicInterpreter.interpret(ast, truthValuePermutations[i - 1]);
             table[i][cols] = evaluated == 1 ? truth : falsity;
+        }
+    }
+
+    private void generateTable() {
+        if (isTableDone) return;
+        generateHeaders();
+        int[][] truthValuePermutations = generateAndStoreTruthValuePermutations();
+        generateInterpretedValues(truthValuePermutations);
+        isTableDone = true;
+    }
+
+    public void printTable() {
+        generateTable();
+        for (String[] row : table) {
+            for (String element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
         }
     }
 }
