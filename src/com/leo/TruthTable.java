@@ -43,6 +43,16 @@ public class TruthTable {
     private final String falsity;
     private final String formula;
     private final Expr ast;
+    private final String[][] table;
+    private boolean isTableDone = false;
+
+    private void generateHeaders() {
+        int cols = table[0].length; // Propositions + formula
+
+        // Doesn't set the last element, as the number of propositions is rows - 1
+        BooleanLogicParser.getPropositionNames().toArray(table[0]);
+        table[0][cols - 1] = formula;
+    }
 
     /**
      * Generates every permutation of values for the propositions in the truth table.
