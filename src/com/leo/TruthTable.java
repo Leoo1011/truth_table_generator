@@ -42,7 +42,6 @@ public class TruthTable {
     private final String truth;
     private final String falsity;
     private final String formula;
-    private final Token[] tokens;
     private final Expr ast;
 
     /**
