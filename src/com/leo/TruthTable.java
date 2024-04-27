@@ -88,6 +88,11 @@ public class TruthTable {
         return result;
     }
 
+    /**
+     * Interprets the formula, by feeding the {@link BooleanLogicInterpreter} every sub-array of truthValuePermutations,
+     * and updating the table accordingly.
+     * @param truthValuePermutations the truth values to be used as input to the {@link BooleanLogicInterpreter}.
+     */
     private void generateInterpretedValues(int[][] truthValuePermutations) {
         int rows = table.length;
         int cols = table[0].length - 1;
