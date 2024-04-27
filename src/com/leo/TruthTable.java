@@ -32,6 +32,11 @@ public class TruthTable {
         formula = expression;
         Token[] tokens = BooleanLogicLexer.tokenize(formula);
         ast = BooleanLogicParser.parse(tokens);
+
+        int numProps = BooleanLogicParser.getPropositionNames().size();
+        int rows = (int) Math.pow(2, numProps) + 1; // number of permutations + formula
+        int cols = numProps + 1;                    // number of propositions + formula
+        table = new String[rows][cols];
     }
 
     private final String truth;
@@ -42,9 +47,7 @@ public class TruthTable {
 
     /**
      * Generates every permutation of values for the propositions in the truth table.
-     * @return array of arrays of ints containing each permutation in the form of 1's (true) and 0's (false).
-     *
-     * @implNote Counting from 0 to 3 (in binary) is:
+     * Counting from 0 to 3 (in binary) is:
      * <ul>
      * <li>00, which is equivalent to the tuple (F, F)</li>
      * <li>01 (F, T)</li>
@@ -52,21 +55,27 @@ public class TruthTable {
      * <li>11 (T, T)</li>
      * </ul>
      * Which, effectively, are all the possible permutations for a truth table with two propositions.
-     * This algorithm uses this fact, along with bitwise operations (and masking) to extract each individual
+     * This algorithm uses this fact, along with bitwise operations (masking) to extract each individual
      * bit (truth value).
+     *
+     * @return int[][] with each value as a 0 (false) or 1 (true). The internal table maintained by the class
+     * will be updated with strings corresponding to the custom values of 'truth' and 'falsity'.
      */
-    private static int[][] generateTruthValuePermutations() {
-        int nProps = BooleanLogicParser.getPropositionNames().size();
-        int nPerms = ((int) Math.pow(2, nProps));
-        int[][] permutations = new int[nPerms][nProps];
-        for (int num = 0; num < nPerms; num++) {   // Binary counter
+    private int[][] generateAndStoreTruthValuePermutations() {
+        int nPerms = table.length - 1;
+        int nProps = table[0].length - 1;
+        int[][] result = new int[nPerms][nProps];
+        for (int num = 1; num < nPerms + 1; num++) {  // Binary counter
             for (int i = 0; i < nProps; i++) {
-                int index = 1 << (nProps - 1) - i; // To extract bits from right to left.
-                // Dividing by 'index' trims trailing 0s (same as right-shifting by index/2).
-                int extractedBit = (num & index) / index;
-                permutations[num][i] = extractedBit;
+                int mask = 1 << (nProps - 1) - i;     // To extract bits from right to left.
+                int counter = num - 1;                // Because num starts at 1
+
+                // Dividing by 'mask' trims trailing 0s (same as right-shifting by mask/2).
+                int extractedBit = (counter & mask) / mask;
+                result[num - 1][i] = extractedBit;
+                table[num][i] = extractedBit == 1 ? truth : falsity;
             }
         }
-        return permutations;
+        return result;
     }
 }
