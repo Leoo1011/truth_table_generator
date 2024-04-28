@@ -33,6 +33,7 @@ public class BooleanLogicParser {
      * @throws ParseError if the tokens provided in the constructor don't match the grammar.
      */
     public static Expr parse(final Token[] tokenArray) throws ParseError {
+        current = 0;
         tokens = tokenArray;
         propositionNames = new LinkedHashSet<>();
 
