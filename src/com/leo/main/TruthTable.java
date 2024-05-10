@@ -1,5 +1,7 @@
 package com.leo.main;
 
+import java.util.Objects;
+
 public class TruthTable {
     /**
      * A truth table generator.
@@ -24,15 +26,15 @@ public class TruthTable {
      */
     public TruthTable(String expression, String[] truthRepresentation)
             throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalStateException {
+        formula = Objects.requireNonNull(expression);
         if (truthRepresentation.length != 2) {
             throw new IllegalArgumentException("'truthRepresentation' should have exactly 2 values.");
         }
-        if (expression.isBlank()) {
+        if (formula.isBlank()) {
             throw new IllegalArgumentException("'expression' shouldn't be empty or blank.");
         }
         truth = truthRepresentation[0];
         falsity = truthRepresentation[1];
-        formula = expression;
         Token[] tokens = BooleanLogicLexer.tokenize(formula);
         ast = BooleanLogicParser.parse(tokens);
 
