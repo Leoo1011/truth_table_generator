@@ -1,4 +1,4 @@
-package com.leo;
+package com.leo.main;
 
 public class TruthTable {
     /**
@@ -118,5 +118,10 @@ public class TruthTable {
             }
             System.out.println();
         }
+    }
+
+    public String[][] getTable() {
+        generateTable();
+        return table;
     }
 }

@@ -1,10 +1,10 @@
-package com.leo;
+package com.leo.main;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static com.leo.TokenType.*;
+import static com.leo.main.TokenType.*;
 
 public class BooleanLogicParser {
     private static Token[] tokens;

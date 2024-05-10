@@ -1,8 +1,8 @@
-package com.leo;
+package com.leo.main;
 
 import java.util.HashMap;
 
-import static com.leo.TokenType.*;
+import static com.leo.main.TokenType.*;
 
 /**
  * Helper singleton to convert symbol literals to their enum counterpart.

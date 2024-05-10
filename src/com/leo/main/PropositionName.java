@@ -1,6 +1,6 @@
-package com.leo;
+package com.leo.main;
 
-import static com.leo.TokenType.PROP_NAME;
+import static com.leo.main.TokenType.PROP_NAME;
 
 public class PropositionName extends Token {
     String name;

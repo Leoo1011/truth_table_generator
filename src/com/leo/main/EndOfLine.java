@@ -1,6 +1,6 @@
-package com.leo;
+package com.leo.main;
 
-import static com.leo.TokenType.*;
+import static com.leo.main.TokenType.*;
 
 public class EndOfLine extends Token {
     EndOfLine() {

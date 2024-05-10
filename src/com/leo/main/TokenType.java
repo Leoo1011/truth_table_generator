@@ -1,4 +1,4 @@
-package com.leo;
+package com.leo.main;
 
 /**
  * Enum to represent token types, used by the {@link BooleanLogicLexer}.

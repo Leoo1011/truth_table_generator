@@ -1,4 +1,4 @@
-package com.leo;
+package com.leo.main;
 
 /**
  * Abstract class used to represent the tokens returned by the {@link BooleanLogicLexer},

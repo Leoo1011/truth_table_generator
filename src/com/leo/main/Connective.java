@@ -1,4 +1,4 @@
-package com.leo;
+package com.leo.main;
 
 public class Connective extends Token {
     Connective(TokenType tokenType) {
