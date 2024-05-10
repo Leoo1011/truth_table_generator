@@ -25,7 +25,7 @@ public class TruthTable {
      * @throws IllegalArgumentException if truthRepresentation.length != 2 or if expression is empty or blank.
      */
     public TruthTable(String expression, String[] truthRepresentation)
-            throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalStateException {
+            throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalArgumentException {
         formula = Objects.requireNonNull(expression);
         if (truthRepresentation.length != 2) {
             throw new IllegalArgumentException("'truthRepresentation' should have exactly 2 values.");
