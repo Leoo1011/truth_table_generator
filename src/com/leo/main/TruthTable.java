@@ -8,7 +8,7 @@ public class TruthTable {
      * @throws BooleanLogicLexer.LexError if the formula has invalid tokens.
      * @throws BooleanLogicParser.ParseError if the formula doesn't match the grammar.
      */
-    TruthTable(String expression) throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError {
+    public TruthTable(String expression) throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError {
         this(expression, new String[]{"T", "F"});
     }
 
@@ -22,10 +22,13 @@ public class TruthTable {
      * @throws BooleanLogicParser.ParseError if the formula doesn't match the grammar.
      * @throws IllegalStateException if truthRepresentation.length != 2.
      */
-    TruthTable(String expression, String[] truthRepresentation)
+    public TruthTable(String expression, String[] truthRepresentation)
             throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalStateException {
         if (truthRepresentation.length != 2) {
-            throw new IllegalStateException("'truthRepresentation' should have exactly 2 values.");
+            throw new IllegalArgumentException("'truthRepresentation' should have exactly 2 values.");
+        }
+        if (expression.isEmpty()) {
+            throw new IllegalArgumentException("'expression' shouldn't be empty.");
         }
         truth = truthRepresentation[0];
         falsity = truthRepresentation[1];
