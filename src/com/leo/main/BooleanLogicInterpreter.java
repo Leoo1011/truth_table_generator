@@ -32,7 +32,7 @@ public class BooleanLogicInterpreter {
     }
 
     private static int not(int a) {
-        return a ^ 1; // ~0 = -1
+        return a ^ 1;
     }
 
     private static int interpret(final Expr.BinaryOperation binaryOp) {
