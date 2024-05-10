@@ -20,15 +20,15 @@ public class TruthTable {
      *
      * @throws BooleanLogicLexer.LexError if the formula has invalid tokens.
      * @throws BooleanLogicParser.ParseError if the formula doesn't match the grammar.
-     * @throws IllegalStateException if truthRepresentation.length != 2.
+     * @throws IllegalArgumentException if truthRepresentation.length != 2 or if expression is empty or blank.
      */
     public TruthTable(String expression, String[] truthRepresentation)
             throws BooleanLogicLexer.LexError, BooleanLogicParser.ParseError, IllegalStateException {
         if (truthRepresentation.length != 2) {
             throw new IllegalArgumentException("'truthRepresentation' should have exactly 2 values.");
         }
-        if (expression.isEmpty()) {
-            throw new IllegalArgumentException("'expression' shouldn't be empty.");
+        if (expression.isBlank()) {
+            throw new IllegalArgumentException("'expression' shouldn't be empty or blank.");
         }
         truth = truthRepresentation[0];
         falsity = truthRepresentation[1];
