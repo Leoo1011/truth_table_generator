@@ -1,46 +1,51 @@
 package com.leo.main;
 
+import java.io.PrintStream;
 import java.util.Objects;
 
 public class ExprPrinter {
     public static void printExpr(Expr expr) {
+        printExpr(expr, System.out);
+    }
+
+    public static void printExpr(Expr expr, PrintStream out) {
         Objects.requireNonNull(expr);
         switch (expr) {
-            case Expr.Proposition prop -> printExpr(prop);
-            case Expr.UnaryOperation unaryOp -> printExpr(unaryOp);
-            case Expr.Grouping grouping -> printExpr(grouping);
-            case Expr.BinaryOperation binaryOp -> printExpr(binaryOp);
+            case Expr.Proposition prop -> printExpr(prop, out);
+            case Expr.UnaryOperation unaryOp -> printExpr(unaryOp, out);
+            case Expr.Grouping grouping -> printExpr(grouping, out);
+            case Expr.BinaryOperation binaryOp -> printExpr(binaryOp, out);
             default -> {}
         }
     }
 
-    static void printExpr(Expr.Proposition proposition) {
-        System.out.print(proposition.propositionName.name);
+    static void printExpr(Expr.Proposition proposition, PrintStream out) {
+        out.print(proposition.propositionName.name);
     }
 
-    static void printExpr(Expr.UnaryOperation unaryOperation) {
-        System.out.print("(not ");
+    static void printExpr(Expr.UnaryOperation unaryOperation, PrintStream out) {
+        out.print("(not ");
         printExpr(unaryOperation.expression);
-        System.out.print(")");
+        out.print(")");
     }
 
-    static void printExpr(Expr.Grouping grouping) {
-        System.out.print("(grouping ");
-        printExpr(grouping.expression);
-        System.out.print(")");
+    static void printExpr(Expr.Grouping grouping, PrintStream out) {
+        out.print("(grouping ");
+        printExpr(grouping.expression, out);
+        out.print(")");
     }
 
-    static void printExpr(Token operator) {
-        System.out.print(operator.type);
+    static void printExpr(Token operator, PrintStream out) {
+        out.print(operator.type);
     }
 
-    static void printExpr(Expr.BinaryOperation binaryOperation) {
-        System.out.print("(");
-        printExpr(binaryOperation.operator);
-        System.out.print(" ");
-        printExpr(binaryOperation.left);
-        System.out.print(" ");
-        printExpr(binaryOperation.right);
-        System.out.print(")");
+    static void printExpr(Expr.BinaryOperation binaryOperation, PrintStream out) {
+        out.print("(");
+        printExpr(binaryOperation.operator, out);
+        out.print(" ");
+        printExpr(binaryOperation.left, out);
+        out.print(" ");
+        printExpr(binaryOperation.right, out);
+        out.print(")");
     }
 }
