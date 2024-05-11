@@ -9,10 +9,6 @@ public class PropositionName extends Token {
         name = propName;
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public String toString() {
         return "Proposition{ name = " + name + " }";
