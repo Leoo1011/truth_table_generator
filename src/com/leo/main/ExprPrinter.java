@@ -25,7 +25,7 @@ public class ExprPrinter {
 
     static void printExpr(Expr.UnaryOperation unaryOperation, PrintStream out) {
         out.print("(not ");
-        printExpr(unaryOperation.expression);
+        printExpr(unaryOperation.expression, out);
         out.print(")");
     }
 
