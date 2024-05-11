@@ -1,7 +1,7 @@
 package com.leo.main;
 
 public class Connective extends Token {
-    Connective(TokenType tokenType) {
+    public Connective(TokenType tokenType) {
         super(tokenType);
     }
 

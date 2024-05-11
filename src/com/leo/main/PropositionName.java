@@ -4,9 +4,13 @@ import static com.leo.main.TokenType.PROP_NAME;
 
 public class PropositionName extends Token {
     String name;
-    PropositionName(String propName) {
+    public PropositionName(String propName) {
         super(PROP_NAME);
         name = propName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
