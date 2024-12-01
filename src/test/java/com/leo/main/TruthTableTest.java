@@ -1,8 +1,5 @@
-package com.leo.test;
+package com.leo.main;
 
-import com.leo.main.BooleanLogicLexer;
-import com.leo.main.BooleanLogicParser;
-import com.leo.main.TruthTable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

@@ -1,6 +1,5 @@
-package com.leo.test;
+package com.leo.main;
 
-import com.leo.main.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
