@@ -1,6 +1,6 @@
-package com.leo.main;
+package com.github.Leoo1011.truth_table_generator;
 
-import static com.leo.main.TokenType.PROP_NAME;
+import static com.github.Leoo1011.truth_table_generator.TokenType.PROP_NAME;
 
 public class PropositionName extends Token {
     String name;

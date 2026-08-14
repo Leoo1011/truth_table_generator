@@ -1,8 +1,8 @@
-package com.leo.main;
+package com.github.Leoo1011.truth_table_generator;
 
 import java.util.HashMap;
 
-import static com.leo.main.TokenType.*;
+import static com.github.Leoo1011.truth_table_generator.TokenType.*;
 
 /**
  * Helper singleton to convert symbol literals to their enum counterpart.

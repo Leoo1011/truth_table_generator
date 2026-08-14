@@ -1,10 +1,10 @@
-package com.leo.main;
+package com.github.Leoo1011.truth_table_generator;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static com.leo.main.TokenType.*;
+import static com.github.Leoo1011.truth_table_generator.TokenType.*;
 
 public class BooleanLogicParser {
     private static Token[] tokens;

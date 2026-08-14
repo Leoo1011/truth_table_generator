@@ -1,4 +1,4 @@
-package com.leo.main;
+package com.github.Leoo1011.truth_table_generator;
 
 /**
  * Abstract class used to represent the tokens returned by the {@link BooleanLogicLexer},

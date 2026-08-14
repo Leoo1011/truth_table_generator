@@ -1,4 +1,4 @@
-package com.leo.main;
+package com.github.Leoo1011.truth_table_generator;
 
 /**
  * Enum to represent token types, used by the {@link BooleanLogicLexer}.
