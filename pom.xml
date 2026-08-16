@@ -14,6 +14,16 @@
     <maven.compiler.release>23</maven.compiler.release>
   </properties>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>
+        https://maven.pkg.github.com/Leoo1011/truth_table_generator
+      </url>
+    </repository>
+  </distributionManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
